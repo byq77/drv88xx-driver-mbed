@@ -1,0 +1,10 @@
+{
+    "name":"drv88xx-driver-mbed",
+    "macros": [
+        "DEFAULT_PWM_FREQUENCY=10000"
+    ],
+    "config":
+    {
+
+    }
+}
