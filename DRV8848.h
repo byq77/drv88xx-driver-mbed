@@ -166,7 +166,7 @@ class DRV8848
             _pwm.write(_min_duty_cycle + _pwr * _delta_duty_cycle);
         }
 
-        void init(float freq)
+        void init(int freq)
         {
             setPwmFreq(freq);
         }
@@ -189,7 +189,7 @@ class DRV8848
         float _delta_duty_cycle;
     };
 
-    DRV8848(DRV8848_Params_t *params);
+    DRV8848(const DRV8848_Params_t *params);
     void stop();
     void setDriveMode(bool mode);
     void enable(bool en = true);

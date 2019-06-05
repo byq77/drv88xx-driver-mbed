@@ -1,6 +1,6 @@
 #include "DRV8848.h"
 
-DRV8848::DRV8848(DRV8848_Params_t * params)
+DRV8848::DRV8848(const DRV8848_Params_t * params)
 : _nsleep(params->nsleep,0)
 , _nfault(params->nfault,PullUp)
 , _params(*params)

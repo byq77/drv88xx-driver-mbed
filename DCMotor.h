@@ -27,7 +27,7 @@ class DCMotor
      * @brief Initialise motor.
      * @param pwm_frequency frequency on pwm pin
      */
-    virtual void init(float freq)=0;
+    virtual void init(int freq)=0;
 
     /**
      * @brief Set motor power.
