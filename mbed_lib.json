@@ -1,10 +1,14 @@
 {
     "name":"drv88xx-driver-mbed",
     "macros": [
-        "DEFAULT_PWM_FREQUENCY=10000"
     ],
     "config":
     {
-
+        "use-stm-drv8848-driver":
+        {
+            "help":"Use DRV8848 driver version for STM",
+            "macro_name": "USE_STM_DRV8848_DRIVER",
+            "value": 0
+        }
     }
 }

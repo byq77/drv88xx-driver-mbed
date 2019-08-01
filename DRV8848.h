@@ -28,8 +28,8 @@ class DRV8848
     {
       public:
         DRVMotor(PinName pwm, PinName in1, PinName in2)
-            : _in1(in1, PIN_INPUT, PullDown, 1),
-              _in2(in2, PIN_INPUT, PullDown, 1),
+            : _in1(in1, PIN_OUTPUT, PushPullNoPull, 0),
+              _in2(in2, PIN_OUTPUT, PushPullNoPull, 0),
               _pwm(pwm),
               _polarity(true), _cw(true), _pwr(0), _mode(0)
         {
