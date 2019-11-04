@@ -3,6 +3,15 @@
 
 #if defined(TARGET_CORE2) && USE_STM_DRV8848_DRIVER
 
+enum DRV8848_SetPowerState
+{
+    SET_POWER_O,
+    SET_POWER_MODE_1_CW,
+    SET_POWER_MODE_1_CCW,
+    SET_POWER_MODE_0_CW,
+    SET_POWER_MODE_0_CCW
+};
+
 typedef struct ARR_and_PSC
 {
     uint32_t PSC;
@@ -164,6 +173,8 @@ inline void DRV8848::DRVMotor::setPolarity(bool polarity)
 
 void DRV8848::DRVMotor::setPower(float pwr)
 {
+    static DRV8848_SetPowerState state = SET_POWER_O;
+
     if (pwr == _pwr)
         return;
 
@@ -196,6 +207,7 @@ void DRV8848::DRVMotor::setPower(float pwr)
             _in1 = 0;
             _pwm.write_fast(0.0f);
         }
+        state = SET_POWER_O;
         core_util_critical_section_exit();
         return;
     }
@@ -210,40 +222,56 @@ void DRV8848::DRVMotor::setPower(float pwr)
     {
         if (_mode)
         {
-            _in1.output();
-            _in1.mode(PushPullNoPull);
-            _in1.write(1);
-            _in2.input();
-            _in2.mode(PullNone);
+            if(state != SET_POWER_MODE_1_CW)
+            {
+                _in1.output();
+                _in1.mode(PushPullNoPull);
+                _in1.write(1);
+                _in2.input();
+                _in2.mode(PullNone);
+                state = SET_POWER_MODE_1_CW;
+            }
             _pwr = 1 - _pwr;
         }
         else
         {
-            _in2.output();
-            _in2.mode(PushPullNoPull);
-            _in2.write(0);
-            _in1.input();
-            _in1.mode(PullNone);
+            if(state != SET_POWER_MODE_0_CW)
+            {
+                _in2.output();
+                _in2.mode(PushPullNoPull);
+                _in2.write(0);
+                _in1.input();
+                _in1.mode(PullNone);
+                state = SET_POWER_MODE_0_CW;
+            }
         }
     }
     else
     {
         if (_mode)
         {
-            _in2.output();
-            _in2.mode(PushPullNoPull);
-            _in2.write(1);
-            _in1.input();
-            _in1.mode(PullNone);
+            if(state != SET_POWER_MODE_1_CCW)
+            {
+                _in2.output();
+                _in2.mode(PushPullNoPull);
+                _in2.write(1);
+                _in1.input();
+                _in1.mode(PullNone);
+                state = SET_POWER_MODE_1_CCW;
+            }
             _pwr = 1 - _pwr;
         }
         else
         {
-            _in1.output();
-            _in1.mode(PushPullNoPull);
-            _in1.write(0);
-            _in2.input();
-            _in2.mode(PullNone);
+            if(state != SET_POWER_MODE_0_CCW)
+            {
+                _in1.output();
+                _in1.mode(PushPullNoPull);
+                _in1.write(0);
+                _in2.input();
+                _in2.mode(PullNone);
+                state = SET_POWER_MODE_0_CCW;
+            }
         }
     }
     // set pwm

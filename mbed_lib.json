@@ -10,5 +10,12 @@
             "macro_name": "USE_STM_DRV8848_DRIVER",
             "value": 0
         }
+    },
+    "target_overrides":
+    {
+        "CORE2":
+        {
+            "use-stm-drv8848-driver": 1
+        }
     }
 }
