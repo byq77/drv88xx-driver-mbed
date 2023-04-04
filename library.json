@@ -1,0 +1,9 @@
+{
+    "name": "motor-driver-mbed",
+    "version": "1.0.0",
+    "description": "Mbed motor driver library for ROSbot 2.0",
+    "keywords": "pio, motor_driver",
+    "build": {
+      "builder": "MbedLibBuilder"
+    }
+  }
